@@ -8,4 +8,4 @@ COPY . .
 
 RUN npm install 
 
-
+RUN ./node_modules/.bin/node-pre-gyp build package
