@@ -10,4 +10,4 @@ RUN npm install --build-from-source --sqlite=/usr/local
 
 RUN ./node_modules/.bin/node-pre-gyp build package
 
-RUN [ "cross-build-stop" ]
+RUN [ "cross-build-end" ]
