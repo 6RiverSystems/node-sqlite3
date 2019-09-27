@@ -4,14 +4,27 @@ orbs:
   go-module: timakin/go-module@0.3.0
   sixrs-gke: sixriversystems/sixrs-gke@0.1.1
 jobs:
-  build:
+  build-amd64:
     docker:
       - image: docker:18.09.9-git
     steps:
       - checkout
       - setup_remote_docker
       - run: 
-          command: docker build -t arm64 -f cross.dockerfile .
+          command: docker build -t amd64-f amd64.dockerfile .
+          no_output_timeout: 3600 
+      - run: docker run --name temp-container amd64 /bin/true
+      - run: docker cp temp-container:build/stage/sqlite3/v4.1.0/node-v64-linux-amd64.tar.gz ./
+      - run: docker rm temp-container
+      - run: ls -la
+  build-arm64:
+    docker:
+      - image: docker:18.09.9-git
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run: 
+          command: docker build -t arm64 -f arm64.dockerfile .
           no_output_timeout: 3600 
       - run: docker run --name temp-container arm64 /bin/true
       - run: docker cp temp-container:build/stage/sqlite3/v4.1.0/node-v64-linux-arm64.tar.gz ./
@@ -20,7 +33,9 @@ jobs:
 workflows:
   build_and_release:
     jobs:
-      - build:
+      - build-arm64:
+          context: 6rs-circle
+      - build-amd64:
           context: 6rs-circle
 
       
