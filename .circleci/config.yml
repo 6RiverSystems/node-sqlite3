@@ -1,0 +1,22 @@
+# -*- yaml -*-
+version: 2.1
+orbs:
+  go-module: timakin/go-module@0.3.0
+  sixrs-gke: sixriversystems/sixrs-gke@0.1.1
+jobs:
+  build:
+    docker:
+      - image: balenalib/aarch64-ubuntu-node:10-cosmic
+    steps:
+      - apt-get update && apt-get install git libsqlite3-dev build-essential python-dev
+      - checkout
+      - npm install
+
+
+workflows:
+  build_and_release:
+    jobs:
+      - build:
+          context: 6rs-circle
+
+      
