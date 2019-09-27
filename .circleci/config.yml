@@ -8,9 +8,9 @@ jobs:
     docker:
       - image: balenalib/aarch64-ubuntu-node:10-cosmic
     steps:
-      - apt-get update && apt-get install git libsqlite3-dev build-essential python-dev
+      - run: apt-get update && apt-get install git libsqlite3-dev build-essential python-dev
       - checkout
-      - npm install
+      - run: npm install
 
 
 workflows:
