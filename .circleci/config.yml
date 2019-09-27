@@ -10,7 +10,9 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - run: docker build -t arm64 -f cross.dockerfile .
+      - run: 
+          command: docker build -t arm64 -f cross.dockerfile .
+          no_output_timeout: 3600 
       - run: docker run --name temp-container arm64 /bin/true
       - run: docker cp temp-container:build/stage/sqlite3/v4.1.0/node-v64-linux-arm64.tar.gz ./
       - run: docker rm temp-container
