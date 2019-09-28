@@ -45,6 +45,10 @@ jobs:
       - attach_workspace:
           at: .
       - run: ls -la
+      - run: activate gcloud
+          command: |
+            echo "${CLIENT_SECRET}" | base64 -d > /tmp/client-secret.json
+            gcloud auth activate-service-account --key-file /tmp/client-secret.json
       - run: gsutil cp -r *.tar.gz gs://public-nodejs-binary/sqlite3/v4.1.0/
 
 workflows:
