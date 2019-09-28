@@ -13,7 +13,7 @@ jobs:
       - run: 
           command: docker build -t amd64 -f amd64.dockerfile .
           no_output_timeout: 3600 
-      - run: docker run --name temp-container amd64 cross-build-start; echo thinking;
+      - run: docker run --name temp-container amd64 /bin/true
       - run: docker cp temp-container:build/stage/sqlite3/v4.1.0/node-v64-linux-x64.tar.gz ./
       - run: docker rm temp-container
       - run: ls -la
@@ -26,8 +26,8 @@ jobs:
       - run: 
           command: docker build -t arm64 -f arm64.dockerfile .
           no_output_timeout: 3600 
-      - run: docker run --name temp-container arm64 /bin/bash -c "echo thinking;"
-      - run: docker cp temp-container:build/stage/sqlite3/v4.1.0/node-v64-linux-arm64.tar.gz ./
+      - run: docker run --name temp-container arm64 /bin/true
+      - run: docker cp temp-container:/node-v64-linux-arm64.tar.gz .
       - run: docker rm temp-container
       - run: ls -la
 workflows:
