@@ -55,6 +55,9 @@ workflows:
           context: 6rs-circle
       - upload:
           context: 6rs-circle
+          requires:
+            - build-amd64
+            - build-arm64
 
 
       
