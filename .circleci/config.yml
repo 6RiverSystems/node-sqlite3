@@ -13,7 +13,7 @@ jobs:
       - run: 
           command: docker build -t amd64 -f amd64.dockerfile .
           no_output_timeout: 3600 
-      - run: docker run -it --name temp-container amd64 /bin/bash &
+      - run: docker run --name temp-container amd64 /bin/bash while sleep 2; do echo thinking; done
       - run: docker cp temp-container:build/stage/sqlite3/v4.1.0/node-v64-linux-x64.tar.gz ./
       - run: docker rm temp-container
       - run: ls -la
