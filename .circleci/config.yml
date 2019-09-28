@@ -17,6 +17,10 @@ jobs:
       - run: docker cp temp-container:build/stage/sqlite3/v4.1.0/node-v64-linux-x64.tar.gz ./
       - run: docker rm temp-container
       - run: ls -la
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - node-v64-linux-x64.tar.gz
   build-arm64:
     docker:
       - image: docker:18.09.9-git
@@ -30,6 +34,18 @@ jobs:
       - run: docker cp temp-container:/node-v64-linux-arm64.tar.gz .
       - run: docker rm temp-container
       - run: ls -la
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - node-v64-linux-arm64.tar.gz
+  upload:
+    docker:
+      - image: google/cloud-sdk:alpine
+    steps:
+      - attach_workspace:
+          at: .
+      - run: ls -la
+
 workflows:
   build_and_release:
     jobs:
@@ -37,5 +53,8 @@ workflows:
           context: 6rs-circle
       - build-amd64:
           context: 6rs-circle
+      - upload:
+          context: 6rs-circle
+
 
       
