@@ -45,6 +45,7 @@ jobs:
       - attach_workspace:
           at: .
       - run: ls -la
+      - run: gsutil cp -r *.tar.gz gs://public-nodejs-binary/sqlite3/v4.1.0/
 
 workflows:
   build_and_release:
