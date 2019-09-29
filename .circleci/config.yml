@@ -55,8 +55,12 @@ jobs:
       - run: 
           name: Upload to gcloud 
           command: |
+            BINARY_PATH=$(dirname $(cat binary_path.txt))
             TARGET_PATH=$(dirname $(cat target_path.txt))
+            ls -la ${BINARY_PATH}
+            cp -r ${BINARY_PATH}/*.tar.gz .
             gsutil cp -r *.tar.gz gs://public-nodejs-binary/${TARGET_PATH}/
+            gsutil acl ch -r -u AllUsers:R gs://public-nodejs-binary/${TARGET_PATH}
 
 workflows:
   build_and_release:

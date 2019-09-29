@@ -18,4 +18,4 @@ FROM google/cloud-sdk:alpine
 WORKDIR /
 COPY --from=0 /binary_path.txt .
 COPY --from=0 /target_path.txt .
-COPY --from=0 /build/stage/**/**/*.tar.gz .
+COPY --from=0 /build/stage/ .

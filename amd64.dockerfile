@@ -4,7 +4,7 @@ RUN apt-get update && apt-get install -y libsqlite3-dev build-essential python-d
 
 COPY . . 
 
-RUN npm install --build-from-source --sqlite=/usr/local
+RUN npm install --build-from-source
 
 RUN ./node_modules/.bin/node-pre-gyp build package
 RUN find build/stage -iname "*.tar.gz" > binary_path.txt 
@@ -14,4 +14,4 @@ FROM google/cloud-sdk:alpine
 WORKDIR /
 COPY --from=0 /binary_path.txt .
 COPY --from=0 /target_path.txt .
-COPY --from=0 /build/stage/**/**/*.tar.gz .
+COPY --from=0 /build/stage/ .
