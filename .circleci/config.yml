@@ -39,6 +39,7 @@ jobs:
           root: ./
           paths:
             - target_path.txt
+            - binary_path.txt
             - '@6river'
   upload:
     docker:
