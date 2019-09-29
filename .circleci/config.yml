@@ -22,6 +22,8 @@ jobs:
       - persist_to_workspace:
           root: ./
           paths:
+            - target_path.txt
+            - binary_path.txt
             - '@6river'
   build-arm64:
     docker:
@@ -39,8 +41,6 @@ jobs:
       - persist_to_workspace:
           root: ./
           paths:
-            - target_path.txt
-            - binary_path.txt
             - '@6river'
   upload:
     docker:
