@@ -14,7 +14,7 @@ jobs:
           command: docker build -t amd64 -f amd64.dockerfile .
           no_output_timeout: 3600 
       - run: docker run --name temp-container amd64 /bin/true
-      - run: docker cp temp-container:/build/stage/ ./
+      - run: docker cp temp-container:/@6river/ ./
       - run: docker rm temp-container
       - run: ls -la
       - persist_to_workspace:
@@ -31,7 +31,7 @@ jobs:
           command: docker build -t arm64 -f arm64.dockerfile .
           no_output_timeout: 3600 
       - run: docker run --name temp-container arm64 /bin/true
-      - run: docker cp temp-container:/build/stage/ .
+      - run: docker cp temp-container:/@6river/ .
       - run: docker cp temp-container:/target_path.txt .
       - run: docker rm temp-container
       - run: ls -la
