@@ -9,7 +9,7 @@ COPY . .
 RUN npm install --build-from-source --sqlite=/usr/local
 
 RUN ./node_modules/.bin/node-pre-gyp build package
-RUN find build/stage -iname "*.tar.gz" > binary_path.txt 
+RUN find build/stage -iname "*.tar.gz" | sed 's/^.*@6river/@6river/' > binary_path.txt 
 RUN find build/stage -iname "*.tar.gz" | sed 's/^.*sqlite3/sqlite3/' > target_path.txt
 RUN [ "cross-build-end" ]
 
