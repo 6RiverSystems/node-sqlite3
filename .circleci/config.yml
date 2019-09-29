@@ -20,7 +20,7 @@ jobs:
       - persist_to_workspace:
           root: ./
           paths:
-            - @6river
+            - '@6river'
   build-arm64:
     docker:
       - image: docker:18.09.9-git
@@ -39,7 +39,7 @@ jobs:
           root: ./
           paths:
             - target_path.txt
-            - @6river
+            - '@6river'
   upload:
     docker:
       - image: google/cloud-sdk:alpine
