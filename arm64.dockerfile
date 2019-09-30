@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y libsqlite3-dev build-essential python-d
 
 COPY . . 
 
-RUN npm install
+RUN npm install --build-from-source
 
 RUN ./node_modules/.bin/node-pre-gyp build package
 RUN find build/stage -iname "*.tar.gz" | sed 's/^.*@6river/@6river/' > binary_path.txt 
