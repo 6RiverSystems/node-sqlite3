@@ -68,8 +68,7 @@ jobs:
     docker:
       - image: circleci/node:10.15.3
     steps:
-      - attach_workspace:
-          at: ./
+      - checkout
       - run:
           name: Setup NPM
           command: npm config set //registry.npmjs.org/:_authToken "${NPM_TOKEN}"
