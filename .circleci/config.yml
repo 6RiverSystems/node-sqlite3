@@ -64,19 +64,36 @@ jobs:
             printf "gsutil cp -r *.tar.gz gs://public-nodejs-binary/@6river/${TARGET_PATH}/"
             gsutil cp -r *.tar.gz gs://public-nodejs-binary/@6river/${TARGET_PATH}/
             gsutil acl ch -r -u AllUsers:R gs://public-nodejs-binary/@6river/${TARGET_PATH}
+  publish:
+    docker:
+      - image: circleci/node:10.15.3
+    steps:
+      - attach_workspace:
+          at: ./
+      - run:
+          name: Setup NPM
+          command: npm config set //registry.npmjs.org/:_authToken "${NPM_TOKEN}"
+      - run:
+          name: Publish
+          command: npm publish --access public
 
 workflows:
   build_and_release:
     jobs:
-      - build-arm64:
-          context: 6rs-circle
-      - build-amd64:
-          context: 6rs-circle
+      - build-arm64
+      - build-amd64
       - upload:
           context: 6rs-circle
           requires:
             - build-amd64
             - build-arm64
+      - publish:
+          context: 6rs-public-npm
+          requires:
+            - upload
+          filters:
+            branches:
+              only: master
 
 
       
